@@ -87,7 +87,16 @@ export async function POST(request: NextRequest) {
 
     // Create template
     const template = await db.insert(templates).values({
-      ...validatedData,
+      name: validatedData.name || 'Untitled Template',
+      category: validatedData.category || 'general',
+      difficulty: validatedData.difficulty || 'beginner',
+      prompt: validatedData.prompt || '',
+      description: validatedData.description,
+      language: validatedData.language,
+      settings: validatedData.settings,
+      hasCode: validatedData.hasCode,
+      hasDocs: validatedData.hasDocs,
+      isPublic: validatedData.isPublic,
       createdBy: session.user.id,
     }).returning();
 
