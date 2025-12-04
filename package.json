@@ -17,6 +17,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
     "@tailwindcss/forms": "^0.5.7",
+    "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "cloudinary": "^2.2.0",
@@ -28,12 +29,12 @@
     "next-auth": "^4.24.5",
     "next-themes": "^0.2.1",
     "postgres": "^3.4.3",
+    "zod": "^3.22.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sonner": "^1.4.2",
     "tailwind-merge": "^2.2.1",
-    "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.22.4"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/jszip": "^3.4.1",

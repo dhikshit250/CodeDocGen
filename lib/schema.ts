@@ -8,6 +8,9 @@ export const users = pgTable('users', {
   email: varchar('email', { length: 255 }).notNull().unique(),
   emailVerified: timestamp('email_verified'),
   image: varchar('image', { length: 255 }),
+  password: varchar('password', { length: 255 }), // Added password field
+  role: varchar('role', { length: 50 }).default('user'), // Added role field
+  isActive: boolean('is_active').default(true), // Added isActive field
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
