@@ -154,7 +154,7 @@ export function SignupForm() {
                 id="agree-terms"
                 name="agree-terms"
                 type="checkbox"
-                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2 focus:ring-offset-2 checked:bg-blue-600 checked:border-blue-600"
                 required
               />
               <Label htmlFor="agree-terms" className="ml-2 block text-sm text-muted-foreground">

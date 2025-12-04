@@ -28,6 +28,9 @@ export function LoginForm() {
       });
 
       if (response.ok) {
+        const data = await response.json();
+        // Store user info (in production, use secure cookies/session)
+        localStorage.setItem('user', JSON.stringify(data.user));
         window.location.href = '/dashboard';
       } else {
         const data = await response.json();
@@ -101,7 +104,7 @@ export function LoginForm() {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                  className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2 focus:ring-offset-2 checked:bg-blue-600 checked:border-blue-600"
                 />
                 <Label htmlFor="remember-me" className="ml-2 block text-sm text-muted-foreground">
                   Remember me
