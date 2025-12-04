@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '../../../../lib/db';
-import { files, projects } from '../../../../lib/schema';
+import { db } from '../../../../../lib/db';
+import { files, projects } from '../../../../../lib/schema';
 import { eq, and } from 'drizzle-orm';
-import { auth } from '../../../../lib/auth';
+import { auth } from '../../../../../lib/auth';
 import JSZip from 'jszip';
 
 export async function GET(
@@ -112,7 +112,7 @@ export async function POST(
       // Generate ZIP buffer
       const zipBuffer = await zip.generateAsync({ type: 'uint8array' });
 
-      return new NextResponse(zipBuffer, {
+      return new NextResponse(zipBuffer as any, {
         headers: {
           'Content-Type': 'application/zip',
           'Content-Disposition': `attachment; filename="${project.name}.zip"`,
