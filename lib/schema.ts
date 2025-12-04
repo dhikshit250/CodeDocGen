@@ -4,13 +4,12 @@ import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 // Users table
 export const users = pgTable('users', {
   id: uuid('id').defaultRandom().primaryKey(),
-  name: varchar('name', { length: 255 }),
   email: varchar('email', { length: 255 }).notNull().unique(),
-  emailVerified: timestamp('email_verified'),
-  image: varchar('image', { length: 255 }),
-  password: varchar('password', { length: 255 }), // Added password field
-  role: varchar('role', { length: 50 }).default('user'), // Added role field
-  isActive: boolean('is_active').default(true), // Added isActive field
+  name: varchar('name', { length: 255 }),
+  image: text('image'),
+  password: varchar('password', { length: 255 }), // Added for email/password auth
+  role: varchar('role', { length: 50 }).default('user'), // Added for role-based access
+  isActive: boolean('is_active').default(true), // Added for account status
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
