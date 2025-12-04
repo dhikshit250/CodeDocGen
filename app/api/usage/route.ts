@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '../../../lib/db';
 import { usage, generations, projects } from '../../../lib/schema';
-import { eq, and, gte, lte, count, sum } from 'drizzle-orm';
+import { eq, and, gte, lte, count, sum, sql } from 'drizzle-orm';
 import { auth } from '../../../lib/auth';
 
 export async function GET(request: NextRequest) {
@@ -49,8 +49,8 @@ export async function GET(request: NextRequest) {
         totalGenerations: count(generations.id),
         totalTokensUsed: sum(generations.tokensUsed),
         totalCost: sum(generations.cost),
-        completedGenerations: count(generations.id).where(eq(generations.status, 'completed')),
-        failedGenerations: count(generations.id).where(eq(generations.status, 'failed')),
+        completedGenerations: sql<number>`COUNT(CASE WHEN ${generations.status} = 'completed' THEN 1 END)`,
+        failedGenerations: sql<number>`COUNT(CASE WHEN ${generations.status} = 'failed' THEN 1 END)`,
       })
       .from(generations)
       .where(and(
@@ -63,9 +63,9 @@ export async function GET(request: NextRequest) {
     const projectStats = await db
       .select({
         totalProjects: count(projects.id),
-        codeProjects: count(projects.id).where(eq(projects.type, 'code')),
-        docsProjects: count(projects.id).where(eq(projects.type, 'docs')),
-        bothProjects: count(projects.id).where(eq(projects.type, 'both')),
+        codeProjects: sql<number>`COUNT(CASE WHEN ${projects.type} = 'code' THEN 1 END)`,
+        docsProjects: sql<number>`COUNT(CASE WHEN ${projects.type} = 'docs' THEN 1 END)`,
+        bothProjects: sql<number>`COUNT(CASE WHEN ${projects.type} = 'both' THEN 1 END)`,
       })
       .from(projects)
       .where(and(
@@ -85,8 +85,8 @@ export async function GET(request: NextRequest) {
       .from(usage)
       .where(and(
         eq(usage.userId, session.user.id),
-        gte(usage.date, start.toISOString().split('T')[0]),
-        lte(usage.date, end.toISOString().split('T')[0])
+        gte(usage.date, start),
+        lte(usage.date, end)
       ))
       .orderBy(usage.date);
 
