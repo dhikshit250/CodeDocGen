@@ -53,10 +53,7 @@ export async function GET(request: NextRequest) {
         language: projects.language,
         framework: projects.framework,
         createdAt: projects.createdAt,
-        updatedAt: projects.updatedAt,
-        _count: {
-          files: db.select().from(files).where(eq(files.projectId, projects.id)).then((files: any) => files.length)
-        }
+        updatedAt: projects.updatedAt
       })
       .from(projects)
       .where(whereClause)
@@ -94,7 +91,13 @@ export async function POST(request: NextRequest) {
     // Create project
     const project = await db.insert(projects).values({
       userId: session.user.id,
-      ...validatedData,
+      name: validatedData.name || 'Untitled Project',
+      type: validatedData.type || 'code',
+      prompt: validatedData.prompt || '',
+      description: validatedData.description,
+      language: validatedData.language,
+      framework: validatedData.framework,
+      settings: validatedData.settings,
     }).returning();
 
     return NextResponse.json({ 
